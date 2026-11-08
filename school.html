@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Пятый класс — повторение</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800;900&display=swap');
+
+* {box-sizing:border-box}
+
+body {
+ margin:0;
+ font-family:Nunito,Arial,sans-serif;
+ background:#f1f4ff;
+ color:#202747;
+}
+
+header {
+ background:linear-gradient(130deg,#4438a5,#7968ed);
+ color:white;
+ padding:25px 15px;
+ text-align:center;
+ position:relative;
+}
+
+header h1 {font-size:clamp(25px,5vw,40px);margin:5px}
+header p {opacity:.9; margin: 5px 0 0 0;}
+
+/* ПРОФИЛЬ И УРОВЕНЬ */
+.profile-container {
+ position: absolute;
+ top: 15px;
+ right: 15px;
+ display: flex;
+ align-items: center;
+ gap: 10px;
+ background: rgba(0,0,0,0.25);
+ padding: 6px 14px;
+ border-radius: 40px;
+ backdrop-filter: blur(5px);
+}
+
+.avatar-wrapper {
+ position: relative;
+ width: 56px;
+ height: 56px;
+ border-radius: 50%;
+ cursor: pointer;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ background: #332885;
+ transition: transform 0.2s;
+}
+
+.avatar-wrapper:hover {
+ transform: scale(1.08);
+}
+
+.avatar-img {
+ width: 100%;
+ height: 100%;
+ border-radius: 50%;
+ object-fit: cover;
+}
+
+/* Кольца перерождений */
+.ring-0 { border: 3px solid transparent; }
+.ring-1 { border: 4px solid #b0bec5; box-shadow: 0 0 10px rgba(176,190,197,0.8); } /* Серое */
+.ring-2 { border: 4px solid #ffd700; box-shadow: 0 0 12px rgba(255,215,0,0.9); } /* Золотое */
+.ring-3 { border: 4px solid #00e5ff; box-shadow: 0 0 15px rgba(0,229,255,0.9); } /* Алмазное */
+.ring-4 { /* Радужное */
+ border: 4px solid transparent;
+ background-image: linear-gradient(#4438a5, #4438a5), linear-gradient(45deg, red, orange, yellow, green, cyan, blue, violet);
+ background-origin: border-box;
+ background-clip: content-box, border-box;
+ animation: rainbowSpin 3s linear infinite;
+ box-shadow: 0 0 15px rgba(255,255,255,0.8);
+}
+
+@keyframes rainbowSpin {
+ 0% { filter: hue-rotate(0deg); }
+ 100% { filter: hue-rotate(360deg); }
+}
+
+.level-badge {
+ background: linear-gradient(135deg, #ff9800, #ff5722);
+ color: white;
+ font-weight: 900;
+ font-size: 16px;
+ padding: 4px 10px;
+ border-radius: 20px;
+ box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+ border: 1px solid #fff;
+}
+
+.settings-btn {
+ position: absolute;
+ top: 15px;
+ left: 15px;
+ background: rgba(255,255,255,0.2);
+ font-size: 14px;
+ padding: 8px 12px;
+ margin: 0;
+ border-radius: 10px;
+}
+
+.container {
+ max-width:950px;
+ margin:auto;
+ padding:22px 15px;
+}
+
+.hidden {display:none!important}
+
+.card {
+ background:white;
+ border-radius:22px;
+ padding:25px;
+ margin:17px 0;
+ box-shadow:0 5px 22px #26346a12;
+}
+
+button {
+ border:0;
+ padding:14px 20px;
+ border-radius:13px;
+ background:#6256d9;
+ color:white;
+ font-family:inherit;
+ font-size:16px;
+ font-weight:900;
+ cursor:pointer;
+ transition:.2s;
+ margin:5px;
+}
+
+button:hover {transform:translateY(-2px);filter:brightness(1.1)}
+button:disabled {opacity:.5;cursor:not-allowed;transform:none}
+
+.primary {
+ font-size:19px;
+ padding:17px 35px;
+ background:linear-gradient(120deg,#ff9b43,#f16a75);
+}
+
+.rebirth-btn {
+ background: linear-gradient(120deg, #9c27b0, #e91e63);
+ font-size: 20px;
+ padding: 18px 30px;
+ border-radius: 16px;
+ box-shadow: 0 4px 15px rgba(156, 39, 176, 0.4);
+ animation: pulse 1.5s infinite alternate;
+}
+
+@keyframes pulse {
+ 0% { transform: scale(1); }
+ 100% { transform: scale(1.04); }
+}
+
+.subjects {
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+ gap:15px;
+}
+
+.subject {
+ text-align:center;
+ padding:25px 15px;
+ border:2px solid #edf0ff;
+ border-radius:18px;
+ cursor:pointer;
+ background:white;
+ transition:.2s;
+}
+
+.subject:hover {
+ border-color:#8175ed;
+ transform:translateY(-4px);
+}
+
+.subject .emoji {font-size:50px}
+.subject h3 {margin:10px 0 4px}
+.subject p {color:#858ba8;font-size:13px}
+
+h2 {margin-top:5px}
+h3 {color:#403b91}
+
+.levels {
+ display:flex;
+ flex-wrap:wrap;
+ gap:10px;
+ justify-content:center;
+ margin:20px 0;
+}
+
+.levels button {
+ background:#e9e9fa;
+ color:#48427c;
+}
+
+.levels button.selected {
+ background:#6256d9;
+ color:white;
+}
+
+.answer {
+ display:block;
+ width:100%;
+ margin:10px 0;
+ text-align:left;
+ background:#f0efff;
+ color:#353264;
+ border:2px solid transparent;
+}
+
+.answer:hover {background:#e3e0ff}
+.answer.correct {
+ background:#d8f7e5;
+ border-color:#35b875;
+ color:#166b43;
+}
+.answer.wrong {
+ background:#ffe0e0;
+ border-color:#ed7474;
+ color:#a32929;
+}
+
+.topline {
+ display:flex;
+ justify-content:space-between;
+ flex-wrap:wrap;
+ gap:10px;
+ color:#777b9b;
+ font-weight:800;
+}
+
+.progress {
+ height:12px;
+ background:#e9eafa;
+ border-radius:20px;
+ overflow:hidden;
+ margin:15px 0;
+}
+
+.progress div {
+ height:100%;
+ background:linear-gradient(90deg,#7d6cf3,#43c9b1);
+ width:0%;
+ transition:.3s;
+}
+
+.question {
+ font-size:22px;
+ font-weight:900;
+ line-height:1.5;
+ margin:25px 0;
+}
+
+.feedback {
+ padding:15px;
+ border-radius:12px;
+ margin:15px 0;
+ font-weight:900;
+}
+
+.good {background:#d8f7e5;color:#176c46}
+.bad {background:#ffe1e1;color:#a32929}
+
+.achievement {
+ background:#f6f5ff;
+ padding:15px;
+ border-radius:14px;
+ margin:10px 0;
+ display:flex;
+ gap:15px;
+ align-items:center;
+}
+
+.achievement span {font-size:32px}
+.achievement small {color:#858ba8}
+.lock {opacity:.45;filter:grayscale(1)}
+
+footer {
+ text-align:center;
+ padding:30px;
+ color:#9399b3;
+}
+
+.stats {
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:12px;
+}
+
+.stat {
+ background:#f2f1ff;
+ border-radius:14px;
+ padding:17px;
+ text-align:center;
+}
+
+.stat strong {
+ display:block;
+ font-size:27px;
+ color:#5b50c5;
+}
+
+/* МОДАЛЬНЫЕ ОКНА */
+.modal-overlay {
+ position: fixed;
+ top:0; left:0; right:0; bottom:0;
+ background: rgba(0,0,0,0.7);
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ z-index: 1000;
+ padding: 15px;
+}
+
+.modal {
+ background: white;
+ border-radius: 20px;
+ padding: 25px;
+ max-width: 450px;
+ width: 100%;
+ box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+ position: relative;
+}
+
+.crop-viewport {
+ width: 220px;
+ height: 220px;
+ border-radius: 50%;
+ border: 3px dashed #6256d9;
+ margin: 15px auto;
+ overflow: hidden;
+ position: relative;
+ background: #eef;
+ cursor: grab;
+}
+
+.crop-viewport img {
+ position: absolute;
+ user-select: none;
+ touch-action: none;
+}
+
+/* КАТ-СЦЕНЫ */
+.cutscene-overlay {
+ position: fixed;
+ top:0; left:0; right:0; bottom:0;
+ background: white;
+ z-index: 9999;
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ justify-content: center;
+ text-align: center;
+ padding: 20px;
+ animation: fadeIn 1s ease-in;
+}
+
+@keyframes fadeIn {
+ from { opacity: 0; }
+ to { opacity: 1; }
+}
+
+.firework {
+ position: absolute;
+ font-size: 30px;
+ animation: floatUp 2s linear forwards;
+}
+
+@keyframes floatUp {
+ 0% { transform: translateY(100vh) scale(0.5); opacity: 1; }
+ 100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+}
+
+@media(max-width:500px) {
+ .card {padding:18px}
+ .question {font-size:19px}
+ .profile-container { top: 10px; right: 10px; padding: 4px 8px; }
+ .avatar-wrapper { width: 44px; height: 44px; }
+ .level-badge { font-size: 13px; padding: 2px 8px; }
+ .settings-btn { top: 10px; left: 10px; padding: 6px 10px; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+ <button class="settings-btn" onclick="openAdminModal()">⚙️ Настройки</button>
+ <div class="profile-container">
+  <div class="level-badge" id="userLevelBadge">Ур. 0</div>
+  <div class="avatar-wrapper ring-0" id="avatarRing" onclick="openAvatarModal()" title="Нажми, чтобы изменить аватар">
+   <img src="" id="userAvatar" class="avatar-img" alt="Аватар" style="display:none;">
+   <span id="avatarPlaceholder" style="font-size: 26px;">👤</span>
+  </div>
+ </div>
+ <div style="font-size:45px">🎓</div>
+ <h1>ПЯТЫЙ КЛАСС</h1>
+ <p>Повторяй школьную программу. Учись. Побеждай!</p>
+</header>
+
+<main class="container">
+
+<!-- ГЛАВНАЯ -->
+
+<section id="home">
+ <div class="card" style="text-align:center;padding:35px 15px">
+  <div style="font-size:65px">🚀</div>
+  <h2>Добро пожаловать в школу знаний!</h2>
+  <p>Повтори самое важное из школьной программы и проверь свои знания.</p>
+  <button class="primary" onclick="showSubjects()">НАЧАТЬ ПОВТОРЕНИЕ →</button>
+ </div>
+
+ <div class="card" id="rebirthCard" style="text-align:center; display:none;">
+  <h2>🌀 ПЕРЕРОЖДЕНИЕ ДОСТУПНО!</h2>
+  <p id="rebirthDesc">Вы выполнили все достижения текущего уровня. Готовы перейти на новый этап?</p>
+  <button class="rebirth-btn" onclick="doRebirth()">СДЕЛАТЬ ПЕРЕРОЖДЕНИЕ ✨</button>
+ </div>
+
+ <div class="card">
+  <h2>🏆 Твои достижения <span id="rebirthTitleTag" style="font-size: 16px; color: #7968ed;"></span></h2>
+  <div class="stats">
+   <div class="stat"><strong id="total">0</strong>Решено вопросов</div>
+   <div class="stat"><strong id="correctTotal">0</strong>Правильных ответов</div>
+  </div>
+  <div id="achievements"></div>
+ </div>
+</section>
+
+<!-- ПРЕДМЕТЫ -->
+
+<section id="subjects" class="hidden">
+ <h2>📚 Выбери предмет</h2>
+ <p>Что сегодня будем повторять?</p>
+
+ <div class="subjects">
+  <div class="subject" onclick="chooseSubject('math')">
+   <div class="emoji">➗</div>
+   <h3>Математика</h3>
+   <p>Умножение, деление, задачи</p>
+  </div>
+
+  <div class="subject" onclick="chooseSubject('russian')">
+   <div class="emoji">✍️</div>
+   <h3>Русский язык</h3>
+   <p>Правила, звуки, грамматика</p>
+  </div>
+
+  <div class="subject" onclick="chooseSubject('literature')">
+   <div class="emoji">📖</div>
+   <h3>Литература</h3>
+   <p>Писатели и произведения</p>
+  </div>
+
+  <div class="subject" onclick="chooseSubject('history')">
+   <div class="emoji">🏛️</div>
+   <h3>История</h3>
+   <p>От древних людей до Китая</p>
+  </div>
+ </div>
+
+ <button onclick="goHome()">← На главную</button>
+</section>
+
+<!-- СЛОЖНОСТЬ -->
+
+<section id="difficulty" class="hidden">
+ <div class="card" style="text-align:center">
+  <div style="font-size:55px" id="subjectEmoji">📚</div>
+  <h2 id="subjectName">Предмет</h2>
+  <p>Выбери сложность заданий</p>
+
+  <div class="levels">
+   <button onclick="selectLevel(1)" id="level1">🟢 Лёгкий</button>
+   <button onclick="selectLevel(2)" id="level2">🟡 Средний</button>
+   <button onclick="selectLevel(3)" id="level3">🔴 Сложный</button>
+  </div>
+
+  <p id="levelDescription">Выбери уровень сложности.</p>
+  <button class="primary" onclick="beginLesson()">НАЧАТЬ УРОК</button>
+  <br>
+  <button onclick="showSubjects()">← Назад</button>
+ </div>
+</section>
+
+<!-- УРОК -->
+
+<section id="lesson" class="hidden">
+ <div class="card">
+
+  <div class="topline">
+   <span id="lessonTitle">Математика</span>
+   <span id="questionNumber">Вопрос 1 из 20</span>
+  </div>
+
+  <div class="progress"><div id="progressBar"></div></div>
+
+  <div class="question" id="question">Вопрос</div>
+
+  <div id="answers"></div>
+  <div id="feedback"></div>
+
+  <button id="nextButton" class="primary hidden" onclick="nextQuestion()">
+   СЛЕДУЮЩИЙ ВОПРОС →
+  </button>
+
+ </div>
+
+ <button onclick="exitLesson()">Выйти из урока</button>
+</section>
+
+<!-- РЕЗУЛЬТАТ -->
+
+<section id="result" class="hidden">
+ <div class="card" style="text-align:center">
+  <div style="font-size:70px" id="resultEmoji">🏆</div>
+  <h2>Урок завершён!</h2>
+  <h3 id="resultTitle">Отличная работа!</h3>
+
+  <div class="stats">
+   <div class="stat"><strong id="resultCorrect">0</strong>Правильно</div>
+   <div class="stat"><strong id="resultWrong">0</strong>Ошибки</div>
+   <div class="stat"><strong id="resultPercent">0%</strong>Результат</div>
+   <div class="stat"><strong id="resultPoints">0</strong>Очки</div>
+  </div>
+
+  <p id="resultMessage"></p>
+
+  <button class="primary" onclick="showSubjects()">ВЫБРАТЬ ПРЕДМЕТ</button>
+  <br>
+  <button onclick="goHome()">НА ГЛАВНУЮ</button>
+ </div>
+</section>
+
+</main>
+
+<!-- МОДАЛЬНОЕ ОКНО: АВАТАРКА -->
+<div id="avatarModal" class="modal-overlay hidden">
+ <div class="modal" style="text-align:center;">
+  <h3>🖼️ Смена фото профиля</h3>
+  <input type="file" id="imageInput" accept="image/*" style="margin:10px 0;">
+  
+  <div class="crop-viewport" id="cropViewport">
+   <img id="cropImage" src="" alt="" style="display:none;">
+  </div>
+  
+  <div style="margin:10px 0;">
+   <label>Масштаб: </label>
+   <input type="range" id="zoomRange" min="0.2" max="3" step="0.05" value="1" disabled>
+  </div>
+
+  <button onclick="saveAvatar()" class="primary" style="padding:10px 20px;">Сохранить фото</button>
+  <button onclick="closeAvatarModal()">Отмена</button>
+ </div>
+</div>
+
+<!-- МОДАЛЬНОЕ ОКНО: АДМИНКА -->
+<div id="adminModal" class="modal-overlay hidden">
+ <div class="modal">
+  <h3>⚙️ Панель администратора</h3>
+  <div id="adminAuth">
+   <p>Введите пароль для админки:</p>
+   <input type="password" id="adminPass" maxlength="6" style="font-size:20px; text-align:center; width:100%; padding:10px; margin-bottom:15px;">
+   <button onclick="checkAdminPass()" class="primary" style="width:100%;">Войти</button>
+  </div>
+  <div id="adminControls" class="hidden">
+   <label>Уровень перерождения (0-4):</label>
+   <input type="number" id="admRebirth" min="0" max="4" style="width:100%; padding:8px; margin:5px 0 15px 0;">
+   
+   <label>Всего решено вопросов:</label>
+   <input type="number" id="admTotal" style="width:100%; padding:8px; margin:5px 0 15px 0;">
+   
+   <label>Правильно решено вопросов:</label>
+   <input type="number" id="admCorrect" style="width:100%; padding:8px; margin:5px 0 15px 0;">
+
+   <button onclick="saveAdminData()" class="primary" style="width:100%;">Сохранить изменения</button>
+  </div>
+  <br><br>
+  <button onclick="closeAdminModal()" style="width:100%;">Закрыть</button>
+ </div>
+</div>
+
+<!-- КАТ-СЦЕНЫ -->
+<div id="cutscene" class="cutscene-overlay hidden">
+ <h1 id="cutsceneTitle" style="font-size:36px; color:#4438a5;"></h1>
+ <p id="cutsceneDesc" style="font-size:20px; max-width:600px; margin:20px auto; color:#333;"></p>
+ <button class="primary" onclick="closeCutscene()">ПРОДОЛЖИТЬ 🚀</button>
+</div>
+
+<footer>
+ ⭐ ШКОЛА ЗНАНИЙ · ПОВТОРЕНИЕ 5 КЛАССА ⭐
+</footer>
+
+<script>
+
+// СОХРАНЕНИЕ И СОСТОЯНИЕ
+
+let saved = {};
+try {
+ saved = JSON.parse(localStorage.getItem("schoolProgress") || "{}");
+} catch(e) { saved = {}; }
+
+let total = saved.total || 0;
+let correctTotal = saved.correct || 0;
+let perfect = saved.perfect || 0;
+let mathSolved = saved.mathSolved || 0;
+let rebirthLevel = saved.rebirthLevel || 0; // 0, 1, 2, 3, 4
+let avatarData = saved.avatarData || "";
+
+let subject = "";
+let difficulty = 1;
+let questions = [];
+let index = 0;
+let correct = 0;
+let wrong = 0;
+let points = 0;
+let answered = false;
+
+// ПРЕДМЕТЫ И ВОПРОСЫ
+
+const subjects = {
+ math: {
+  name:"Математика",
+  emoji:"➗",
+  questions:[
+   ["308 × 188 = ?",["57 904","56 904","58 904"],0],
+   ["30180 ÷ 188 = ?",["160","180","150"],0],
+   ["125 × 24 = ?",["3000","2500","3200"],0],
+   ["8400 ÷ 120 = ?",["70","80","60"],0],
+   ["36 + 12 × 4 - 18 ÷ 3 =",["78","90","72"],0],
+   ["(120 - 35) × 4 =",["340","360","320"],0],
+   ["2500 - 180 × 5 + 60 =",["1660","1760","1560"],0],
+   ["(72 ÷ 8 + 13) × 5 =",["110","105","115"],0],
+   ["600 ÷ (25 - 15) + 45 =",["105","95","115"],0],
+   ["125 × 16 =",["2000","1800","2100"],0],
+   ["936 ÷ 24 =",["39","36","42"],0],
+   ["48 × 125 =",["6000","5000","6500"],0],
+   ["7200 ÷ 90 =",["80","90","70"],0],
+   ["15 + 8 × 6 - 24 ÷ 4 =",["57","54","63"],0],
+   ["(240 + 160) ÷ 8 × 3 =",["150","120","180"],0],
+   ["450 - (36 + 14) × 5 =",["200","250","150"],0],
+   ["1 250 × 8 =",["10 000","9 000","11 000"],0],
+   ["9 600 ÷ 160 =",["60","50","70"],0],
+   ["В одном ящике 24 книги. Сколько книг в 15 ящиках?",["360","340","380"],0],
+   ["Автобус проехал 180 км за 3 часа. Какова его скорость?",["60 км/ч","90 км/ч","45 км/ч"],0]
+ ]
+ },
+
+ russian: {
+  name:"Русский язык",
+  emoji:"✍️",
+  questions:[
+   ["Что изучает лингвистика?",["Язык","Животных","Космос"],0],
+   ["Что такое оглушение согласного?",["Звонкий звук произносится как глухой","Глухой становится звонким","Звук исчезает"],0],
+   ["Что такое озвончение?",["Глухой звук произносится как звонкий","Звонкий становится глухим","Звук удваивается"],0],
+   ["Сколько гласных букв в русском алфавите?",["10","6","12"],0],
+   ["Сколько букв в русском алфавите?",["33","32","31"],0],
+   ["Какие согласные всегда мягкие?",["Й, Ч, Щ","Ж, Ш, Ц","Б, В, Г"],0],
+   ["Какие согласные всегда твёрдые?",["Ж, Ш, Ц","Й, Ч, Щ","Л, М, Н"],0],
+   ["Какая часть слова стоит перед корнем?",["Приставка","Суффикс","Окончание"],0],
+   ["Что такое корень слова?",["Общая значимая часть родственных слов","Последняя буква","Часть после окончания"],0],
+   ["Что обозначает имя существительное?",["Предмет","Действие","Признак"],0],
+   ["На какие вопросы отвечает имя прилагательное?",["Какой? Какая? Какое?","Кто? Что?","Что делать?"],0],
+   ["Что обозначает глагол?",["Действие","Предмет","Признак"],0],
+   ["Сколько падежей в русском языке?",["6","5","7"],0],
+   ["Какой падеж отвечает на вопрос КЕМ? ЧЕМ?",["Творительный","Дательный","Родительный"],0],
+   ["Какой знак ставится в конце вопросительного предложения?",["?","!","."],0],
+   ["Как называется главная часть предложения?",["Грамматическая основа","Приставка","Суффикс"],0],
+   ["Что такое синонимы?",["Слова близкие по значению","Слова противоположные по значению","Одинаково звучащие слова"],0],
+   ["Что такое антонимы?",["Слова с противоположным значением","Слова одинакового значения","Части речи"],0],
+   ["Как пишется НЕ с глаголами обычно?",["Раздельно","Слитно","Через дефис"],0],
+   ["Что такое орфограмма?",["Место в слове, где нужно выбрать правильное написание","Знак препинания","Часть предложения"],0]
+ ]
+ },
+
+ literature: {
+  name:"Литература",
+  emoji:"📖",
+  questions:[
+   ["В каком году родился Александр Пушкин?",["1799","1805","1812"],0],
+   ["В каком году умер Александр Пушкин?",["1837","1841","1825"],0],
+   ["Кто написал «Мцыри»?",["Михаил Лермонтов","Александр Пушкин","Николай Гоголь"],0],
+   ["Кто автор «Бородино»?",["Михаил Лермонтов","Иван Крылов","Александр Пушкин"],0],
+   ["Кто написал сказку «Конёк-Горбунок»?",["Пётр Ершов","Александр Пушкин","Лев Толстой"],0],
+   ["Кто автор «Сказки о рыбаке и рыбке»?",["Александр Пушкин","Михаил Лермонтов","Иван Крылов"],0],
+   ["Когда родился Михаил Лермонтов?",["1814","1799","1821"],0],
+   ["Когда умер Михаил Лермонтов?",["1841","1837","1852"],0],
+   ["Кто написал басню «Ворона и Лисица»?",["Иван Крылов","Александр Пушкин","Лев Толстой"],0],
+   ["Кто автор рассказа «Филипок»?",["Лев Толстой","Антон Чехов","Николай Гоголь"],0],
+   ["Что такое басня?",["Короткое произведение с моралью","Большой роман","Научная статья"],0],
+   ["Что такое эпитет?",["Образное определение","Рифма","Название главы"],0],
+   ["Что такое метафора?",["Скрытое образное сравнение","Вопрос в тексте","Повтор букв"],0],
+   ["Кто написал «Капитанскую дочку»?",["Александр Пушкин","Лев Толстой","Михаил Лермонтов"],0],
+   ["Кто автор «Детства»?",["Лев Толстой","Иван Крылов","Пётр Ершов"],0],
+   ["Что такое стихотворение?",["Произведение с особой ритмической организацией речи","Список правил","Словарь"],0],
+   ["Как называется совпадение окончаний строк в стихах?",["Рифма","Сюжет","Диалог"],0],
+   ["Кто написал «Руслан и Людмила»?",["Александр Пушкин","Михаил Лермонтов","Иван Крылов"],0],
+   ["Что такое главная мысль произведения?",["Основная идея автора","Имя героя","Количество страниц"],0],
+   ["Кто написал «Лев и Собачка»?",["Лев Толстой","Александр Пушкин","Иван Крылов"],0]
+ ]
+ },
+
+ history: {
+  name:"История",
+  emoji:"🏛️",
+  questions:[
+   ["Как называется наука о прошлом человечества?",["История","География","Биология"],0],
+   ["Как называли древнейших людей?",["Первобытные люди","Рыцари","Крестьяне"],0],
+   ["Чем занимались древние люди для добычи пищи?",["Охотой и собирательством","Торговлей акциями","Работой на фабриках"],0],
+   ["Какой материал древние люди использовали для орудий в каменном веке?",["Камень","Пластик","Стекло"],0],
+   ["Как называется занятие по выращиванию растений?",["Земледелие","Охота","Рыболовство"],0],
+   ["Как называется разведение домашних животных?",["Скотоводство","Собирательство","Ремесло"],0],
+   ["Где возникла одна из древнейших цивилизаций?",["В Древнем Египте","В Антарктиде","В Австралии"],0],
+   ["Какая река была важна для Древнего Египта?",["Нил","Волга","Амазонка"],0],
+   ["Как назывались правители Древнего Египта?",["Фараоны","Консулы","Императоры Китая"],0],
+   ["Для чего строили египетские пирамиды?",["Как гробницы фараонов","Как школы","Как рынки"],0],
+   ["На каком материале писали в Древнем Египте?",["Папирус","Пластик","Бумажные деньги"],0],
+   ["Где находилась Древняя Месопотамия?",["Между Тигром и Евфратом","Между Нилом и Амазонкой","В Скандинавии"],0],
+   ["Как называлась древняя письменность Месопотамии?",["Клинопись","Кириллица","Иероглифы майя"],0],
+   ["На чём писали клинописью?",["На глиняных табличках","На ткани","На стекле"],0],
+   ["Какая страна известна Великой Китайской стеной?",["Китай","Египет","Греция"],0],
+   ["Как называли древнюю китайскую письменность?",["Иероглифы","Клинопись","Латиница"],0],
+   ["Какая река является одной из важнейших в истории Китая?",["Хуанхэ","Нил","Дунай"],0],
+   ["Что такое Шёлковый путь?",["Торговый маршрут","Военное оружие","Древний храм"],0],
+   ["Как называли древних китайских правителей?",["Императоры","Фараоны","Консулы"],0],
+   ["Что такое археология?",["Наука, изучающая прошлое по вещественным находкам","Наука о погоде","Наука о растениях"],0]
+ ]
+ }
+};
+
+// СИСТЕМА ДОСТИЖЕНИЙ ДЛЯ ВСЕХ ЭТАПОВ
+
+const achievementSets = {
+ 0: [ // Базовые
+  ["🥉","Первые шаги","Реши 10 вопросов",()=>total>=10],
+  ["🥈","Знаток","Реши 50 вопросов",()=>total>=50],
+  ["🥇","Мастер знаний","Реши 100 вопросов",()=>total>=100],
+  ["🧮","Математик","Реши 10 примеров по математике",()=>mathSolved>=10],
+  ["🏆","Самый умный","Заверши целый урок без ошибок",()=>perfect>=1],
+  ["👑","Легенда школы","Заверши 5 уроков без ошибок",()=>perfect>=5],
+  ["📚","Книжный червь","Реши 20 вопросов по литературе",()=>total>=20],
+  ["🌍","Путешественник","Реши 20 вопросов по истории",()=>total>=20]
+ ],
+ 1: [ // Серебряные (Сложнее)
+  ["⚙️","Опыт II","Реши 200 вопросов",()=>total>=200],
+  ["🔥","Усердие II","Реши 350 вопросов",()=>total>=350],
+  ["⚡","Скорость II","Реши 500 вопросов",()=>total>=500],
+  ["🧠","Вычисления II","Реши 100 примеров по математике",()=>mathSolved>=100],
+  ["🎯","Точность II","Заверши 10 уроков без ошибок",()=>perfect>=10],
+  ["📜","Эрудит II","Правильных ответов: 300+",()=>correctTotal>=300],
+  ["⭐","Звездный ученик","Достигни 10 уровня",()=>getUserLevel()>=10],
+  ["🚀","Прорыв","Достигни 20 уровня",()=>getUserLevel()>=20]
+ ],
+ 2: [ // Золотые (Ещё сложнее и масштабнее)
+  ["🌟","Золотой старт","Реши 800 вопросов",()=>total>=800],
+  ["💥","Мастер мысли","Реши 1200 вопросов",()=>total>=1200],
+  ["🏆","Титан знаний","Реши 2000 вопросов",()=>total>=2000],
+  ["🧮","Гений чисел","Реши 500 примеров по математике",()=>mathSolved>=500],
+  ["👑","Властелин уроков","Заверши 25 уроков без ошибок",()=>perfect>=25],
+  ["🎯","Безупречность","Правильных ответов: 1500+",()=>correctTotal>=1500],
+  ["🎖️","Элита школы","Достигни 50 уровня",()=>getUserLevel()>=50],
+  ["🌠","Абсолют","Достигни 75 уровня",()=>getUserLevel()>=75]
+ ],
+ 3: [ // Алмазный уровень (Сложнейшие)
+  ["💎","Алмазный путь","Реши 2500 вопросов",()=>total>=2500],
+  ["💎","Алмазный разум","Реши 3000 вопросов",()=>total>=3000],
+  ["💎","Алмазный титан","Реши 3500 вопросов",()=>total>=3500],
+  ["💎","Алмазный гений","Реши 4000 вопросов",()=>total>=4000],
+  ["💎","Алмазная точность","Правильных ответов: 3500+",()=>correctTotal>=3500],
+  ["💎","Алмазный математик","Реши 1000 примеров по математике",()=>mathSolved>=1000],
+  ["💎","Алмазный идеалист","Заверши 50 уроков без ошибок",()=>perfect>=50],
+  ["💎","Алмазная вершина","Достигни 90 уровня",()=>getUserLevel()>=90]
+ ],
+ 4: [ // Божественный уровень (20 сложнейших)
+  ["🔮","Божество I","Реши 4100 вопросов",()=>total>=4100],
+  ["🔮","Божество II","Реши 4200 вопросов",()=>total>=4200],
+  ["🔮","Божество III","Реши 4300 вопросов",()=>total>=4300],
+  ["🔮","Божество IV","Реши 4400 вопросов",()=>total>=4400],
+  ["🔮","Божество V","Реши 4500 вопросов",()=>total>=4500],
+  ["🔮","Божество VI","Реши 4600 вопросов",()=>total>=4600],
+  ["🔮","Божество VII","Реши 4700 вопросов",()=>total>=4700],
+  ["🔮","Божество VIII","Реши 4800 вопросов",()=>total>=4800],
+  ["🔮","Божество IX","Реши 4900 вопросов",()=>total>=4900],
+  ["🔮","Божество X","Реши 5000 вопросов",()=>total>=5000],
+  ["⚡","Божественная сила I","Правильных ответов: 4000+",()=>correctTotal>=4000],
+  ["⚡","Божественная сила II","Правильных ответов: 4500+",()=>correctTotal>=4500],
+  ["🧮","Бог математики I","Реши 1200 примеров",()=>mathSolved>=1200],
+  ["🧮","Бог математики II","Реши 1500 примеров",()=>mathSolved>=1500],
+  ["👑","Бессмертный ученик","Заверши 75 уроков без ошибок",()=>perfect>=75],
+  ["👑","Правитель знаний","Заверши 100 уроков без ошибок",()=>perfect>=100],
+  ["🌈","Радужный уровень I","Достигни 95 уровня",()=>getUserLevel()>=95],
+  ["🌈","Радужный уровень II","Достигни 98 уровня",()=>getUserLevel()>=98],
+  ["🌈","Радужный уровень III","Достигни 99 уровня",()=>getUserLevel()>=99],
+  ["👑","МАКСИМАЛЬНЫЙ БОГ","Достигни 100 уровня",()=>getUserLevel()>=100]
+ ]
+};
+
+// ТОЧНЫЙ РАСЧЕТ УРОВНЯ (от 0 до 100 по правильным ответам)
+// 1 ур = 3 правильных ответа
+// 50 ур = 1000 правильных ответов
+// 100 ур = 3000 правильных ответов
+function getUserLevel() {
+ let c = correctTotal;
+ if (c < 3) return 0;
+ if (c <= 1000) {
+  // Линейный рост от 1 до 50 уровня (от 3 до 1000 правильных)
+  return Math.floor(1 + (c - 3) * 49 / (1000 - 3));
+ } else if (c <= 3000) {
+  // Линейный рост от 50 до 100 уровня (от 1000 до 3000 правильных)
+  return Math.floor(50 + (c - 1000) * 50 / (3000 - 1000));
+ } else {
+  return 100;
+ }
+}
+
+// НАВИГАЦИЯ
+
+function hideAll() {
+ ["home","subjects","difficulty","lesson","result"].forEach(id=>{
+  document.getElementById(id).classList.add("hidden");
+ });
+}
+
+function goHome() {
+ hideAll();
+ document.getElementById("home").classList.remove("hidden");
+ updateHome();
+}
+
+function showSubjects() {
+ hideAll();
+ document.getElementById("subjects").classList.remove("hidden");
+}
+
+function chooseSubject(s) {
+ subject=s;
+ hideAll();
+ document.getElementById("difficulty").classList.remove("hidden");
+
+ document.getElementById("subjectName").textContent=subjects[s].name;
+ document.getElementById("subjectEmoji").textContent=subjects[s].emoji;
+
+ selectLevel(1);
+}
+
+function selectLevel(l) {
+ difficulty=l;
+
+ [1,2,3].forEach(i=>{
+  document.getElementById("level"+i).classList.toggle("selected",i===l);
+ });
+
+ const descriptions=[
+  "",
+  "🟢 Спокойное повторение основных понятий.",
+  "🟡 Задания посложнее: нужно хорошо подумать.",
+  "🔴 Продвинутый уровень: настоящая проверка знаний!"
+ ];
+
+ document.getElementById("levelDescription").textContent=descriptions[l];
+}
+
+// ГЕНЕРАЦИЯ ЗАДАНИЙ
+
+function makeQuestions() {
+ let source=subjects[subject].questions.map(q=>[...q]);
+ source.sort(()=>Math.random()-.5);
+
+ if(subject==="math") {
+  if(difficulty===2) {
+   source[0]=["(360 + 240) ÷ 12 × 7 =",["350","320","400"],0];
+   source[1]=["480 × 25 =",["12000","10000","14000"],0];
+   source[2]=["7200 ÷ 144 =",["50","60","40"],0];
+  }
+  if(difficulty===3) {
+   source[0]=["(125 × 16 - 400) ÷ 20 + 35 =",["115","105","125"],0];
+   source[1]=["308 × 188 =",["57 904","56 904","58 904"],0];
+   source[2]=["30180 ÷ 188 =",["160","180","150"],0];
+  }
+ }
+
+ return source.slice(0,20);
+}
+
+// НАЧАЛО УРОКА
+
+function beginLesson() {
+ questions=makeQuestions();
+ index=0;
+ correct=0;
+ wrong=0;
+ points=0;
+
+ hideAll();
+ document.getElementById("lesson").classList.remove("hidden");
+ document.getElementById("lessonTitle").textContent=subjects[subject].name;
+ showQuestion();
+}
+
+function showQuestion() {
+ answered=false;
+ let q=questions[index];
+
+ document.getElementById("questionNumber").textContent= "Вопрос "+(index+1)+" из 20";
+ document.getElementById("progressBar").style.width= ((index)/20*100)+"%";
+ document.getElementById("question").textContent=q[0];
+ document.getElementById("feedback").innerHTML="";
+ document.getElementById("nextButton").classList.add("hidden");
+
+ let answers=q[1].map((a,i)=>({text:a,original:i}));
+ answers.sort(()=>Math.random()-.5);
+
+ document.getElementById("answers").innerHTML="";
+
+ answers.forEach(a=>{
+  let btn=document.createElement("button");
+  btn.className="answer";
+  btn.textContent=a.text;
+  btn.onclick=()=>chooseAnswer(a.original,btn);
+  document.getElementById("answers").appendChild(btn);
+ });
+}
+
+// ОТВЕТ
+
+function chooseAnswer(choice,button) {
+ if(answered) return;
+ answered=true;
+
+ let q=questions[index];
+ let right=q[2];
+ let buttons=document.querySelectorAll(".answer");
+
+ buttons.forEach(b=>b.disabled=true);
+
+ let correctButton=[...buttons].find(b=> b.textContent===q[1][right] );
+
+ if(choice===right) {
+  correct++;
+  points+=difficulty*10;
+  total++;
+  correctTotal++;
+
+  if(subject==="math") mathSolved++;
+
+  button.classList.add("correct");
+  document.getElementById("feedback").innerHTML= '<div class="feedback good">✅ ПРАВИЛЬНО! Отличная работа!</div>';
+ } else {
+  wrong++;
+  total++;
+
+  button.classList.add("wrong");
+  correctButton.classList.add("correct");
+
+  document.getElementById("feedback").innerHTML= '<div class="feedback bad">❌ НЕПРАВИЛЬНО! Правильный ответ: '+ q[1][right]+'</div>';
+ }
+
+ save();
+ updateHome();
+
+ let next=document.getElementById("nextButton");
+ next.classList.remove("hidden");
+ next.textContent=index===19?"ЗАВЕРШИТЬ УРОК 🏆":"СЛЕДУЮЩИЙ ВОПРОС →";
+}
+
+function nextQuestion() {
+ index++;
+ if(index>=20) {
+  finishLesson();
+ } else {
+  showQuestion();
+ }
+}
+
+function finishLesson() {
+ document.getElementById("progressBar").style.width="100%";
+ if(correct===20) perfect++;
+
+ let percent=correct*5;
+
+ document.getElementById("resultCorrect").textContent=correct;
+ document.getElementById("resultWrong").textContent=wrong;
+ document.getElementById("resultPercent").textContent=percent+"%";
+ document.getElementById("resultPoints").textContent=points;
+
+ document.getElementById("resultEmoji").textContent= correct===20?"🏆":correct>=15?"🌟":correct>=10?"👍":"📚";
+ document.getElementById("resultTitle").textContent= correct===20?"ИДЕАЛЬНО! НИ ОДНОЙ ОШИБКИ!": correct>=15?"ОТЛИЧНЫЙ РЕЗУЛЬТАТ!": correct>=10?"ХОРОШАЯ РАБОТА!":"ЕСТЬ ЧТО ПОВТОРИТЬ!";
+ document.getElementById("resultMessage").textContent= "Ты завершил урок по предмету «"+subjects[subject].name+"». Продолжай учиться и становись лучше!";
+
+ save();
+ hideAll();
+ document.getElementById("result").classList.remove("hidden");
+ updateHome();
+}
+
+function exitLesson() {
+ if(confirm("Выйти из урока? Его текущий результат не будет сохранён.")) {
+  showSubjects();
+ }
+}
+
+// ОБНОВЛЕНИЕ ИНТЕРФЕЙСА И ДОСТИЖЕНИЙ
+
+function updateHome() {
+ document.getElementById("total").textContent=total;
+ document.getElementById("correctTotal").textContent=correctTotal;
+ 
+ // Уровень
+ document.getElementById("userLevelBadge").textContent = "Ур. " + getUserLevel();
+
+ // Обновление кольца аватара
+ let ring = document.getElementById("avatarRing");
+ ring.className = "avatar-wrapper ring-" + rebirthLevel;
+
+ if (avatarData) {
+  document.getElementById("userAvatar").src = avatarData;
+  document.getElementById("userAvatar").style.display = "block";
+  document.getElementById("avatarPlaceholder").style.display = "none";
+ }
+
+ // Отрисовка достижений
+ let currentList = achievementSets[rebirthLevel] || achievementSets[4];
+ document.getElementById("achievements").innerHTML="";
+ 
+ let allCompleted = true;
+
+ currentList.forEach(a=>{
+  let unlocked=a[3]();
+  if(!unlocked) allCompleted = false;
+
+  let div=document.createElement("div");
+  div.className="achievement"+(unlocked?"":" lock");
+
+  let emoji=document.createElement("span");
+  emoji.textContent=a[0];
+
+  let info=document.createElement("div");
+  let name=document.createElement("strong");
+  name.textContent=a[1];
+
+  let desc=document.createElement("small");
+  desc.textContent="\n"+(unlocked?"Получено! 🎉":a[2]);
+
+  info.append(name,document.createElement("br"),desc);
+  div.append(emoji,info);
+
+  document.getElementById("achievements").appendChild(div);
+ });
+
+ // Заголовок этапа
+ const titles = ["", "(Серебряный этап)", "(Золотой этап)", "(Алмазный этап)", "(Божественный этап)"];
+ document.getElementById("rebirthTitleTag").textContent = titles[rebirthLevel] || "";
+
+ // Показ кнопки перерождения
+ let rCard = document.getElementById("rebirthCard");
+ if (allCompleted && rebirthLevel < 4) {
+  rCard.style.display = "block";
+ } else {
+  rCard.style.display = "none";
+ }
+
+ // Окончание игры на божественном уровне
+ if (rebirthLevel === 4 && allCompleted) {
+  triggerFireworks();
+ }
+}
+
+// ПЕРЕРОЖДЕНИЯ И КАТ-СЦЕНЫ
+
+function doRebirth() {
+ if (rebirthLevel >= 4) return;
+ rebirthLevel++;
+ save();
+ updateHome();
+
+ let cutscene = document.getElementById("cutscene");
+ let cTitle = document.getElementById("cutsceneTitle");
+ let cDesc = document.getElementById("cutsceneDesc");
+
+ cutscene.classList.remove("hidden");
+
+ if (rebirthLevel === 1) {
+  cTitle.textContent = "⚙️ СЕРЕБРЯНОЕ ПЕРЕРОЖДЕНИЕ!";
+  cDesc.textContent = "Поздравляем! Вы получили серое кольцо вокруг фото профиля. Впереди вас ждут более сложные достижения!";
+ } else if (rebirthLevel === 2) {
+  cTitle.textContent = "🌟 ЗОЛОТОЙ УРОВЕНЬ!";
+  cDesc.textContent = "Поздравляем, вы дошли до предпоследнего перерождения алмазной зоны! Ваше фото теперь украшает золотое кольцо!";
+ } else if (rebirthLevel === 3) {
+  cTitle.textContent = "💎 ВАС В ГОРОДЕ ВСЕ ПОЗДРАВЯТ!";
+  cDesc.textContent = "Поздравляем! Вы стали богом! Вокруг аватара сияет алмазное кольцо, а впереди — невероятные испытания!";
+ } else if (rebirthLevel === 4) {
+  cTitle.textContent = "👑 БОЖЕСТВЕННЫЙ УРОВЕНЬ И РАДУЖНОЕ КОЛЬЦО!";
+  cDesc.textContent = "Вам доступно разноцветное кольцо из всех цветов радуги! Вышли последние 20 сложнейших достижений!";
+ }
+}
+
+function closeCutscene() {
+ document.getElementById("cutscene").classList.add("hidden");
+}
+
+function triggerFireworks() {
+ showCutscene("🎉 ВСЁ ОБУЧЕНИЕ ПРОЙДЕНО!", "Поздравляем, вы прошли всё обучение и выполнили абсолютно все божественные достижения! Вы настоящий мастер!");
+ for(let i=0; i<30; i++) {
+  setTimeout(()=>{
+   let fw = document.createElement("div");
+   fw.className = "firework";
+   fw.textContent = ["🎉","✨","🎆","💥","⭐"][Math.floor(Math.random()*5)];
+   fw.style.left = Math.random()*90 + "%";
+   document.body.appendChild(fw);
+   setTimeout(()=>fw.remove(), 2000);
+  }, i*150);
+ }
+}
+
+function showCutscene(title, desc) {
+ let cutscene = document.getElementById("cutscene");
+ document.getElementById("cutsceneTitle").textContent = title;
+ document.getElementById("cutsceneDesc").textContent = desc;
+ cutscene.classList.remove("hidden");
+}
+
+// КАДРИРОВАНИЕ И ЗАГРУЗКА АВАТАРА
+
+let cropImg = document.getElementById("cropImage");
+let viewport = document.getElementById("cropViewport");
+let scale = 1, posX = 0, posY = 0;
+let isDragging = false, startX, startY;
+
+function openAvatarModal() {
+ document.getElementById("avatarModal").classList.remove("hidden");
+}
+
+function closeAvatarModal() {
+ document.getElementById("avatarModal").classList.add("hidden");
+}
+
+document.getElementById("imageInput").addEventListener("change", function(e){
+ let file = e.target.files[0];
+ if(!file) return;
+ let reader = new FileReader();
+ reader.onload = function(evt) {
+  cropImg.src = evt.target.result;
+  cropImg.style.display = "block";
+  scale = 1; posX = 0; posY = 0;
+  updateCropTransform();
+  document.getElementById("zoomRange").disabled = false;
+  document.getElementById("zoomRange").value = 1;
+ };
+ reader.readAsDataURL(file);
+});
+
+document.getElementById("zoomRange").addEventListener("input", function(e){
+ scale = parseFloat(e.target.value);
+ updateCropTransform();
+});
+
+viewport.addEventListener("mousedown", (e)=>{ isDragging = true; startX = e.clientX - posX; startY = e.clientY - posY; });
+window.addEventListener("mousemove", (e)=>{
+ if(!isDragging) return;
+ posX = e.clientX - startX;
+ posY = e.clientY - startY;
+ updateCropTransform();
+});
+window.addEventListener("mouseup", ()=>{ isDragging = false; });
+
+// Поддержка сенсорных экранов на телефоне
+viewport.addEventListener("touchstart", (e)=>{
+ if(e.touches.length===1) { isDragging = true; startX = e.touches[0].clientX - posX; startY = e.touches[0].clientY - posY; }
+});
+window.addEventListener("touchmove", (e)=>{
+ if(!isDragging || e.touches.length!==1) return;
+ posX = e.touches[0].clientX - startX;
+ posY = e.touches[0].clientY - startY;
+ updateCropTransform();
+});
+window.addEventListener("touchend", ()=>{ isDragging = false; });
+
+function updateCropTransform() {
+ cropImg.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
+}
+
+function saveAvatar() {
+ if (!cropImg.src) { closeAvatarModal(); return; }
+ 
+ let canvas = document.createElement("canvas");
+ canvas.width = 150;
+ canvas.height = 150;
+ let ctx = canvas.getContext("2d");
+
+ ctx.beginPath();
+ ctx.arc(75, 75, 75, 0, Math.PI * 2);
+ ctx.clip();
+
+ // Отрисовка кадрированного фото на холст
+ let rect = viewport.getBoundingClientRect();
+ let imgRect = cropImg.getBoundingClientRect();
+
+ let drawX = (imgRect.left - rect.left) * (150 / 220);
+ let drawY = (imgRect.top - rect.top) * (150 / 220);
+ let drawW = imgRect.width * (150 / 220);
+ let drawH = imgRect.height * (150 / 220);
+
+ ctx.drawImage(cropImg, drawX, drawY, drawW, drawH);
+
+ avatarData = canvas.toDataURL("image/png");
+ save();
+ updateHome();
+ closeAvatarModal();
+}
+
+// ПАНЕЛЬ АДМИНИСТРАТОРА (181215)
+
+function openAdminModal() {
+ document.getElementById("adminModal").classList.remove("hidden");
+ document.getElementById("adminAuth").classList.remove("hidden");
+ document.getElementById("adminControls").classList.add("hidden");
+ document.getElementById("adminPass").value = "";
+}
+
+function closeAdminModal() {
+ document.getElementById("adminModal").classList.add("hidden");
+}
+
+function checkAdminPass() {
+ let pass = document.getElementById("adminPass").value;
+ if (pass === "181215") {
+  document.getElementById("adminAuth").classList.add("hidden");
+  document.getElementById("adminControls").classList.remove("hidden");
+  
+  document.getElementById("admRebirth").value = rebirthLevel;
+  document.getElementById("admTotal").value = total;
+  document.getElementById("admCorrect").value = correctTotal;
+ } else {
+  alert("Неверный пароль!");
+ }
+}
+
+function saveAdminData() {
+ rebirthLevel = parseInt(document.getElementById("admRebirth").value) || 0;
+ total = parseInt(document.getElementById("admTotal").value) || 0;
+ correctTotal = parseInt(document.getElementById("admCorrect").value) || 0;
+ 
+ save();
+ updateHome();
+ closeAdminModal();
+ alert("Данные успешно сохранены!");
+}
+
+// СОХРАНЕНИЕ В LOCALSTORAGE
+
+function save() {
+ saved={
+  total:total,
+  correct:correctTotal,
+  perfect:perfect,
+  mathSolved:mathSolved,
+  rebirthLevel:rebirthLevel,
+  avatarData:avatarData
+ };
+
+ localStorage.setItem("schoolProgress",JSON.stringify(saved));
+}
+
+updateHome();
+
+</script>
+</body>
+</html>
